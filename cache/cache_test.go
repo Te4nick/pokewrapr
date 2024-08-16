@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func TestGet(t *testing.T) {
+func TestGetOk(t *testing.T) {
 	cases := []struct {
 		key   string
 		value string
@@ -41,6 +41,18 @@ func TestGet(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestGetNil(t *testing.T) {
+
+	cache := NewCache()
+
+	val := cache.Get("nonexist")
+	if val != nil {
+		t.Errorf("expected not to find key")
+		return
+	}
+
 }
 
 func TestSetDefault(t *testing.T) {

@@ -26,7 +26,7 @@ func fetch(endpoint string, out interface{}) error {
 
 	if UseCache {
 		data := c.Get(endpoint)
-		if data != nil {
+		if data != nil { // TODO: Check if can set value
 			reflect.ValueOf(out).Elem().Set(reflect.ValueOf(data).Elem())
 		}
 	}
