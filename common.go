@@ -22,6 +22,13 @@ func fetch(endpoint string, out interface{}) error {
 	if strings.Contains(endpoint, baseURL) {
 		apiURL = endpoint
 		endpoint = apiURL[len(baseURL):]
+	} else {
+		apiURL = baseURL
+		sep := ""
+		if endpoint[0] != '/' {
+			sep = "/"
+		}
+		apiURL += sep + endpoint
 	}
 
 	if UseCache {
@@ -29,16 +36,6 @@ func fetch(endpoint string, out interface{}) error {
 		if data != nil { // TODO: Check if can set value
 			reflect.ValueOf(out).Elem().Set(reflect.ValueOf(data).Elem())
 		}
-	}
-
-	var err error
-	if apiURL == "" {
-		apiURL = baseURL
-		sep := ""
-		if endpoint[0] != '/' {
-			sep = "/"
-		}
-		apiURL += sep + endpoint
 	}
 
 	resp, err := http.Get(apiURL)
